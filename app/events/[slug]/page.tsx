@@ -2,6 +2,7 @@ import BookEvent from "@/components/BookEvent";
 import EventCard from "@/components/EventCard";
 import { IEvent } from "@/database/event.model";
 import { getSimilarEventsBySlug } from "@/lib/action/event.action";
+import { cacheLife } from "next/cache";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -43,10 +44,12 @@ const EventTags = ({ tags }: { tags: string[] }) => {
 };
 
 const EventDetailPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  "use cache";
+  cacheLife("hours");
   const { slug } = await params;
   const res = await fetch(`${BASE_URL}/api/event/${slug}`);
   const {
-    event: { description, overview, image, location, date, time, mode, audience, agenda, organizer, tags },
+    event: { _id, description, overview, image, location, date, time, mode, audience, agenda, organizer, tags },
   } = await res.json();
 
   const booking = 10;
@@ -94,7 +97,7 @@ const EventDetailPage = async ({ params }: { params: Promise<{ slug: string }> }
           <div className="signup-card">
             <h2>Book Your Spot</h2>
             {booking > 0 ? <p className="text-sm">Join {booking} who already booked their spot</p> : <p className="text-sm">Be the first to book your spot!</p>}
-            <BookEvent />
+            <BookEvent eventId={_id} slug={slug} />
           </div>
         </aside>
       </div>
