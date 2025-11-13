@@ -10,7 +10,7 @@ const Home = async () => {
   // Fetch events from the API
   "use cache";
   cacheLife("hours");
-  const res = await fetch(`${BASE_URL}/api/event`, { cache: "no-store" });
+  const res = await fetch(`${BASE_URL}/api/event`);
   const { events } = await res.json();
 
   return (
