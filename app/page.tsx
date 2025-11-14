@@ -1,6 +1,7 @@
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { IEvent } from "@/database/event.model";
+import { events } from "@/lib/constants";
 import { cacheLife } from "next/cache";
 import React from "react";
 
@@ -10,8 +11,8 @@ const Home = async () => {
   // Fetch events from the API
   "use cache";
   cacheLife("hours");
-  const res = await fetch(`${BASE_URL}/api/event`);
-  const { events } = await res.json();
+  // const res = await fetch(`${BASE_URL}/api/event`);
+  // const { events } = await res.json();
 
   return (
     <section>
@@ -26,7 +27,7 @@ const Home = async () => {
         <ul className="events list-none">
           {events &&
             events.length > 0 &&
-            events.map((event: IEvent) => (
+            events.map((event) => (
               <li key={event.slug}>
                 <EventCard {...event} />
               </li>
