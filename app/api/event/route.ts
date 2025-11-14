@@ -22,9 +22,9 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json({ message: "Image file is required" }, { status: 400 });
     }
 
-    // Parsing tags and agenda from JSON strings
-    const tags = JSON.parse(formData.get("tags") as string);
-    const agenda = JSON.parse(formData.get("agenda") as string);
+    // // Parsing tags and agenda from JSON strings
+    // const tags = JSON.parse(formData.get("tags") as string);
+    // const agenda = JSON.parse(formData.get("agenda") as string);
 
     const arrayBuffer = await imageFile.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -42,8 +42,6 @@ export const POST = async (req: NextRequest) => {
 
     const createEvent = await Event.create({
       ...event,
-      tags: tags,
-      agenda: agenda,
     });
 
     return NextResponse.json({ message: "Event created successfully", event: createEvent }, { status: 201 });

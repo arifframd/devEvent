@@ -63,7 +63,7 @@ const EventDetail = async ({ params }: { params: Promise<string> }) => {
   }
 
   const booking = 10;
-  const { _id, title, image, location, date, time, mode, audience, overview, description, organizer, agenda, tags } = event;
+  const { _id, image, location, date, time, mode, audience, overview, description, organizer, agenda, tags } = event;
   if (!description) return notFound();
 
   const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
@@ -93,14 +93,14 @@ const EventDetail = async ({ params }: { params: Promise<string> }) => {
             <EventDetailItem icon="/icons/audience.svg" alt="audience" label={audience} />
           </section>
 
-          <EventAgenda agenda={agenda} />
+          <EventAgenda agenda={JSON.parse(agenda[0])} />
 
           <section className="flex-col-gap-2">
             <h2>About the Organizer</h2>
             <p>{organizer}</p>
           </section>
 
-          <EventTags tags={tags} />
+          <EventTags tags={JSON.parse(tags[0])} />
         </div>
 
         {/* Right side - Booking Form */}
